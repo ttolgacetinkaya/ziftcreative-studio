@@ -16,7 +16,7 @@ router.post('/', (req,res)=>{
 router.put('/:id/state', (req,res)=>{
   const db = getDB();
   const { state, error='' } = req.body||{};
-  db.prepare('UPDATE jobs SET state=?, error=?, updated_at=datetime('now') WHERE id=?').run(state, error, req.params.id);
+  db.prepare("UPDATE jobs SET state=?, error=?, updated_at=datetime('now') WHERE id=?").run(state, error, req.params.id);
   const row = db.prepare('SELECT * FROM jobs WHERE id=?').get(req.params.id);
   res.json({ ok:true, job: row });
 });
