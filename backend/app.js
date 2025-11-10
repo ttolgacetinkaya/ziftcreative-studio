@@ -1,0 +1,44 @@
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
+
+import { initDB } from './models/db.js';
+import channelsRoutes from './routes/channels.js';
+import jobsRoutes from './routes/jobs.js';
+import studioRoutes from './routes/studio.js';
+import setupRoutes from './routes/setup.js';
+import trendsRoutes from './routes/trends.js';
+import analyticsRoutes from './routes/analytics.js';
+import aiRoutes from './routes/ai.js';
+import pipelineRoutes from './routes/pipeline.js';
+import shortsRoutes from './routes/shorts.js';
+import optimizeRoutes from './routes/optimize.js';
+import tenantRoutes from './routes/tenant.js';
+import billingRoutes from './routes/billing.js';
+import healthRoutes from './routes/health.js';
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+await initDB();
+
+app.get('/', (req,res)=>res.json({ok:true, name:'Ziftcreative Backend v6.4'}));
+
+app.use('/channels', channelsRoutes);
+app.use('/jobs', jobsRoutes);
+app.use('/studio', studioRoutes);
+app.use('/setup', setupRoutes);
+app.use('/trends', trendsRoutes);
+app.use('/analytics', analyticsRoutes);
+app.use('/ai', aiRoutes);
+app.use('/pipeline', pipelineRoutes);
+app.use('/shorts', shortsRoutes);
+app.use('/optimize', optimizeRoutes);
+app.use('/agency/tenant', tenantRoutes);
+app.use('/agency/billing', billingRoutes);
+app.use('/scale', healthRoutes);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, ()=> console.log('Ziftcreative backend on', PORT));
